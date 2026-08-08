@@ -6,7 +6,7 @@ export const site = {
   github: "https://github.com/shirisha456",
   linkedin: "https://linkedin.com/in/shirisha-gujja-85a487215",
   resumeHref: "/resume/Shirisha_Gujja_Resume.pdf",
-  url: "portfolio-website-pi-eight-60.vercel.app",
+  url:  "https://shirishagujja.com",
 };
 
 export const nav = [
