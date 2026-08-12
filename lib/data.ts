@@ -139,8 +139,8 @@ export type CaseStudy = {
 
 export const caseStudies: CaseStudy[] = [
   {
-    slug: "fitforge",
-    name: "FitForge",
+    slug: "fitness-tracker",
+    name: "Fitness Tracker",
     tagline: "AI-powered fitness platform, built and deployed phase by phase",
     problem:
       "Fitness tracking is usually split across single-purpose apps — a calorie counter, a workout log, a spreadsheet for weight over time — none of which share data. That means any \"AI coaching\" those apps offer is generic, because it isn't reasoning over a person's actual logged history across all three.",
@@ -194,8 +194,8 @@ export const caseStudies: CaseStudy[] = [
       "GitHub Actions",
       "OpenAI API",
     ],
-    github: "https://github.com/shirisha456/FitForge",
-    live: "https://fitforge.18-221-88-168.sslip.io",
+    github: "https://github.com/shirisha456/Fitness_Tracker",
+    live: "https://fitness-tracker.18-221-88-168.sslip.io",
     status: "Live · 16/16 phases complete",
     diagram: {
       nodes: [
@@ -221,8 +221,8 @@ export const caseStudies: CaseStudy[] = [
     },
   },
   {
-    slug: "meridian",
-    name: "Meridian",
+    slug: "personal-finance-platform",
+    name: "Personal Finance Platform",
     tagline: "Event-driven personal finance platform with a transactional outbox",
     problem:
       "Personal finance data is scattered across banks, brokerages, and manual tracking. Getting one accurate picture — spending by category, budget adherence, net worth, investment performance — usually means a spreadsheet, or handing a third party read access to every account.",
@@ -281,7 +281,7 @@ export const caseStudies: CaseStudy[] = [
       "Plaid API",
       "OpenAI API",
     ],
-    github: "https://github.com/shirisha456/Meridian",
+    github: "https://github.com/shirisha456/Personal-Finance-Platform",
     status: "16/16 phases complete · infra validated, not deployed",
     diagram: {
       nodes: [

@@ -21,8 +21,8 @@ export function About() {
               large language models and enterprise data — teaching tool calls to fetch only the
               GraphQL fields they actually needed, and rebuilding a nine-hour nightly refresh job
               as Redshift-backed Python ETL with real retry logic and validation, cutting it to
-              under ninety minutes. Outside of work, I build full systems end to end: FitForge and
-              Meridian each went from a data model on paper to a deployed, containerized
+              under ninety minutes. Outside of work, I build full systems end to end: Fitness Tracker and
+              Personal Finance Platform each went from a data model on paper to a deployed, containerized
               application, with the architecture decisions behind them written down as I made
               them, not reconstructed after the fact.
             </p>
