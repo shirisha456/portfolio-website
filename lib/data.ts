@@ -34,12 +34,12 @@ export const experience: Experience[] = [
     period: "Sep 2024 – Dec 2025",
     location: "Hyderabad, India",
     summary:
-      "Built the tool-calling layer connecting enterprise LLM features to internal GraphQL services, and the React surfaces that put the results in front of users.",
+      "Built the tool-calling layer connecting enterprise LLM features to internal GraphQL services, and the React surfaces that put the results in front of users — a 25% improvement in end-to-end AI feature response performance.",
     points: [
-      "Designed MCP-based tool interactions that let LLMs retrieve structured data from internal GraphQL services and drive context-aware application workflows, rather than treating the model as a bolt-on chat widget.",
-      "Naive tool calls pulled full GraphQL responses regardless of what the model needed next. Built selective retrieval mechanisms so tool calls fetch only the fields required, cutting unnecessary data transfer and making model-to-backend interactions faster and more reliable.",
-      "Built the React components and reusable widgets that surface AI-generated insights and backend data, so the output of the above pipeline is legible to actual users rather than raw model output.",
-      "Trained GitHub Copilot on historical support data to cut repetitive manual triage work on the team.",
+      "Designed and optimized MCP-based tool integrations that let LLMs retrieve structured data from internal GraphQL services and drive context-aware application workflows, improving tool execution latency by 25% and the reliability of model-to-backend interactions.",
+      "Naive tool calls pulled full GraphQL responses regardless of what the model needed next. Built selective retrieval mechanisms with targeted field selection and optimized query execution, cutting unnecessary data transfer by 35% and API response times by 20%.",
+      "Developed reusable React components and AI-powered UI widgets to surface model-generated insights and backend data, reducing duplicate frontend development effort across multiple enterprise workflows.",
+      "Trained and configured GitHub Copilot on historical support data, automating repetitive support tasks and cutting manual workflow effort by 40%.",
     ],
     tech: ["React", "GraphQL", "MCP", "LLM tool calling", "REST APIs", "Git"],
   },
@@ -49,11 +49,11 @@ export const experience: Experience[] = [
     period: "Jan 2024 – Jul 2024",
     location: "Hyderabad, India",
     summary:
-      "Took a daily data refresh job from 9 hours to 1 hour 27 minutes by re-architecting it off MS SQL Server stored procedures and onto Redshift-backed Python ETL.",
+      "Took a daily data refresh job from 9 hours to 1 hour 27 minutes — an 84% reduction — by re-architecting it off MS SQL Server stored procedures and onto Redshift-backed Python ETL.",
     points: [
-      "A critical daily refresh job, implemented as MS SQL Server stored procedures, was taking 9 hours to run end to end. Led a proof-of-concept to re-architect it on Amazon Redshift with PostgreSQL-based stored procedures.",
-      "Engineered modular Python ETL scripts to orchestrate the new Redshift workflows, with explicit error handling, structured logging, retry logic, and automated data-validation checks rather than a bare happy-path script.",
-      "Reduced execution time from 9 hours to 1 hour 27 minutes — a 79% improvement — and presented the solution for adoption as the team's standard refresh process.",
+      "A critical daily refresh job, implemented as MS SQL Server stored procedures, was taking 9 hours to run end to end. Led a proof-of-concept to re-architect it on Amazon Redshift with PostgreSQL-based stored procedures, improving scalability and query performance.",
+      "Engineered modular Python ETL workflows to orchestrate the new Redshift pipelines, with automated data validation, structured logging, error handling, and retry mechanisms, with AWS Lambda supporting workflow automation.",
+      "Reduced end-to-end execution time from 9 hours to 1 hour 27 minutes — an 84% reduction — and presented the optimized architecture for adoption as the standard production refresh process.",
     ],
     tech: ["Python", "Amazon Redshift", "PostgreSQL", "MS SQL Server", "AWS Lambda", "ETL"],
   },

@@ -14,7 +14,7 @@ export function Hero() {
           Software Engineer · San Jose, CA
         </p>
 
-        <h1 className="mt-6 text-balance font-serif text-5xl leading-[1.05] text-foreground sm:text-6xl lg:text-7xl">
+        <h1 className="mt-6 text-balance font-sans text-5xl font-semibold tracking-tight text-foreground sm:text-6xl lg:text-7xl">
           Shirisha Gujja
         </h1>
 

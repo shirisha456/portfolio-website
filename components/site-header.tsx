@@ -37,7 +37,7 @@ export function SiteHeader() {
       <div className="mx-auto flex h-16 max-w-content items-center justify-between px-6">
         <a
           href="#top"
-          className="font-serif text-lg tracking-tight text-foreground"
+          className="font-sans text-lg font-semibold tracking-tight text-foreground"
           onClick={() => setOpen(false)}
         >
           Shirisha Gujja
