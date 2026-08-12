@@ -14,8 +14,8 @@ export function Contact() {
             Looking for software engineer, backend, full-stack, and AI/LLM engineering roles.
           </h2>
           <p className="mt-5 text-balance text-base leading-relaxed text-muted sm:text-lg">
-            If your team cares about getting the fundamentals right before shipping the
-            interesting part, I&rsquo;d like to talk.
+            I&rsquo;d love to hear about what your team is building and how my background in
+            backend systems and AI-powered products could help.
           </p>
 
           <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
