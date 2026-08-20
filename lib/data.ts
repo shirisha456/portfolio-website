@@ -145,10 +145,11 @@ export const caseStudies: CaseStudy[] = [
     problem:
       "Fitness tracking is usually split across single-purpose apps — a calorie counter, a workout log, a spreadsheet for weight over time — none of which share data. That means any \"AI coaching\" those apps offer is generic, because it isn't reasoning over a person's actual logged history across all three.",
     approach: [
-      "Built one data model spanning workouts, nutrition, and body progress, so the AI coach reasons over what a user actually logged instead of giving generic advice.",
-      "Architected six modular backend domains — auth, workouts, nutrition, progress, profile, and AI coaching — each with its own models, validation schemas, service layer, and REST routes, so new features never risked breaking ones already shipped.",
-      "Shipped a Next.js frontend that acts as its own backend-for-frontend: Route Handlers hold JWTs in httpOnly cookies, so the browser JavaScript never sees an access token.",
-      "Deployed the full stack to a real AWS EC2 instance behind nginx, with a genuine Let's Encrypt HTTPS certificate — not a local-only demo.",
+      "Six backend domains — auth, workouts, nutrition, progress, profile, and AI coaching — each with its own database models, validation schemas, service layer, and REST endpoints.",
+      "A single data model spanning workouts, nutrition, and body measurements, so the AI coach can reason over a user's complete logged history rather than one slice of it.",
+      "An AI coach built on the OpenAI API that generates personalized workout and meal plans and answers fitness questions, with structured response validation and graceful degradation when the API is unavailable.",
+      "Session handling with JWT access tokens, refresh token rotation, and httpOnly cookies held by a Next.js backend-for-frontend layer, keeping tokens out of browser JavaScript.",
+      "A containerized deployment on AWS EC2 behind nginx with Let's Encrypt HTTPS, plus Celery and Redis running background jobs off the request path.",
     ],
     decisions: [
       {
@@ -227,10 +228,12 @@ export const caseStudies: CaseStudy[] = [
     problem:
       "Personal finance data is scattered across banks, brokerages, and manual tracking. Getting one accurate picture — spending by category, budget adherence, net worth, investment performance — usually means a spreadsheet, or handing a third party read access to every account.",
     approach: [
-      "Centralized accounts, transactions, budgets, goals, and investments behind authentication the user controls, with Plaid handling bank sync so data doesn't have to be entered by hand.",
-      "Every write that needs downstream processing (categorization, anomaly detection) commits an outbox row in the same database transaction as the write itself, so the event can never be lost even if the message broker is down at that instant.",
-      "Split categorization, anomaly detection, and notification fan-out into three independently deployable consumer services reading from Kafka (Redpanda), instead of doing that work inline on the request path.",
-      "Wired distributed tracing through every hop — including across Kafka, which has no built-in trace propagation the way HTTP middleware does — so one user action shows up as one connected trace, not four disconnected ones.",
+      "Accounts, transactions, budgets, savings goals, investments, net worth, and cash-flow forecasting, all scoped to the authenticated user.",
+      "Plaid integration for bank account linking and transaction sync, with access tokens encrypted at rest and per-user authorization enforced across financial data.",
+      "A transactional outbox that writes each event in the same database transaction as the record that triggered it, so no event is lost if the message broker is unavailable.",
+      "Three independently deployable consumer services on Kafka that categorize transactions, detect unusual spending, and push real-time alerts to the browser over WebSockets.",
+      "AI-generated monthly spending insights grounded on pre-computed aggregates, with a deterministic template fallback when the model call fails.",
+      "Distributed tracing, metrics, and structured logs across every service, correlated end to end through OpenTelemetry, Prometheus, Grafana, Loki, and Tempo.",
     ],
     decisions: [
       {
