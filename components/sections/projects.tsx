@@ -1,5 +1,4 @@
 import { ArrowUpRight } from "lucide-react";
-import { SectionHeading } from "@/components/section-heading";
 import { CaseStudyBlock } from "@/components/case-study";
 import { Reveal } from "@/components/reveal";
 import { caseStudies, otherWork } from "@/lib/data";
@@ -8,21 +7,19 @@ export function Projects() {
   return (
     <section id="work" className="border-b border-border">
       <div className="mx-auto max-w-content px-6 py-24 sm:py-28">
-        <SectionHeading
-          eyebrow="Selected work"
-          title="Two systems, built and documented phase by phase"
-          description="Both went from a data model on paper to a deployed, containerized application — architecture decisions, trade-offs, and verification steps recorded as they were made, not written up after the fact."
-        />
+        <Reveal>
+          <h2 className="font-serif text-3xl text-foreground sm:text-4xl">Projects</h2>
+        </Reveal>
 
-        <div className="mt-14">
-          {caseStudies.map((study, i) => (
-            <CaseStudyBlock key={study.slug} study={study} index={i} />
+        <div className="mt-10">
+          {caseStudies.map((study) => (
+            <CaseStudyBlock key={study.slug} study={study} />
           ))}
         </div>
 
         <div className="mt-8 border-t border-border pt-14">
           <Reveal>
-            <h3 className="font-mono text-xs tracking-widest text-muted uppercase">More engineering work</h3>
+            <h3 className="font-mono text-xs tracking-widest text-muted uppercase">More projects</h3>
           </Reveal>
           <div className="mt-6 grid gap-6 sm:grid-cols-2">
             {otherWork.map((project, i) => (
