@@ -1,4 +1,3 @@
-import { ArrowRight } from "lucide-react";
 import { GitHubIcon, LinkedInIcon } from "@/components/icons";
 import { site } from "@/lib/data";
 
@@ -31,17 +30,10 @@ export function Hero() {
 
         <div className="mt-10 flex flex-wrap items-center gap-4">
           <a
-            href="#work"
-            className="group inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 font-mono text-sm text-accent-foreground transition-transform hover:-translate-y-0.5"
-          >
-            View my work
-            <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
-          </a>
-          <a
             href={site.resumeHref}
             target="_blank"
             rel="noreferrer"
-            className="inline-flex items-center gap-2 rounded-full border border-border-strong px-6 py-3 font-mono text-sm text-foreground transition-colors hover:border-accent hover:text-accent"
+            className="inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 font-mono text-sm text-accent-foreground transition-transform hover:-translate-y-0.5"
           >
             Resume
           </a>

@@ -15,9 +15,6 @@ export function CaseStudyBlock({ study }: { study: CaseStudy }) {
           </div>
 
           <div className="flex flex-col items-start gap-3 sm:items-end">
-            <span className="rounded-full border border-border px-3 py-1 font-mono text-[11px] text-muted">
-              {study.status}
-            </span>
             <div className="flex gap-3">
               {study.live && (
                 <a

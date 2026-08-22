@@ -1,4 +1,3 @@
-import { SectionHeading } from "@/components/section-heading";
 import { Reveal } from "@/components/reveal";
 import { experience } from "@/lib/data";
 
@@ -6,13 +5,11 @@ export function Experience() {
   return (
     <section id="experience" className="border-b border-border bg-surface/40">
       <div className="mx-auto max-w-content px-6 py-24 sm:py-28">
-        <SectionHeading
-          eyebrow="Experience"
-          title="Where I've worked"
-          description="Two roles at S&P Global, on either side of the line between raw enterprise data and the AI features built on top of it."
-        />
+        <Reveal>
+          <h2 className="font-serif text-3xl text-foreground sm:text-4xl">Experience</h2>
+        </Reveal>
 
-        <div className="mt-16 space-y-14">
+        <div className="mt-10 space-y-14">
           {experience.map((role, i) => (
             <Reveal key={role.title} delay={i * 80}>
               <article className="grid gap-6 border-t border-border pt-8 lg:grid-cols-[220px_1fr]">
