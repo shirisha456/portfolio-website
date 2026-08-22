@@ -1,4 +1,3 @@
-import { SectionHeading } from "@/components/section-heading";
 import { Reveal } from "@/components/reveal";
 import { education } from "@/lib/data";
 
@@ -6,9 +5,11 @@ export function Education() {
   return (
     <section id="education" className="border-b border-border">
       <div className="mx-auto max-w-content px-6 py-24 sm:py-28">
-        <SectionHeading eyebrow="Education" title="Academic background" />
+        <Reveal>
+          <h2 className="font-serif text-3xl text-foreground sm:text-4xl">Education</h2>
+        </Reveal>
 
-        <div className="mt-12 grid gap-6 sm:grid-cols-2">
+        <div className="mt-10 grid gap-6 sm:grid-cols-2">
           {education.map((ed, i) => (
             <Reveal key={ed.school} delay={i * 80}>
               <div className="rounded-xl border border-border p-6">

@@ -11,7 +11,7 @@ export const site = {
 
 export const nav = [
   { href: "#experience", label: "Experience" },
-  { href: "#work", label: "Work" },
+  { href: "#work", label: "Projects" },
   { href: "#stack", label: "Stack" },
   { href: "#about", label: "About" },
   { href: "#contact", label: "Contact" },
@@ -51,7 +51,7 @@ export const experience: Experience[] = [
     summary:
       "Took a daily data refresh job from 9 hours to 1 hour 27 minutes — an 84% reduction — by re-architecting it off MS SQL Server stored procedures and onto Redshift-backed Python ETL.",
     points: [
-      "A critical daily refresh job, implemented as MS SQL Server stored procedures, was taking 9 hours to run end to end. Led a proof-of-concept to re-architect it on Amazon Redshift with PostgreSQL-based stored procedures, improving scalability and query performance.",
+      "Led a proof-of-concept to re-architect a critical daily refresh job, originally implemented as MS SQL Server stored procedures, onto Amazon Redshift with PostgreSQL-based stored procedures, improving scalability and query performance.",
       "Engineered modular Python ETL workflows to orchestrate the new Redshift pipelines, with automated data validation, structured logging, error handling, and retry mechanisms, with AWS Lambda supporting workflow automation.",
       "Reduced end-to-end execution time from 9 hours to 1 hour 27 minutes — an 84% reduction — and presented the optimized architecture for adoption as the standard production refresh process.",
     ],
@@ -319,10 +319,10 @@ export const caseStudies: CaseStudy[] = [
 
 export const otherWork = [
   {
-    name: "secure-4gb-transfer",
-    tagline: "Two architecturally distinct secure file-transfer protocols, from scratch",
+    name: "Secure File Transfer",
+    tagline: "Two secure transfer protocols, built and compared from scratch",
     description:
-      "A security-engineering assessment comparing two ways to move a 4GB file over an untrusted network: mutual TLS with a full CA/server/client certificate chain, versus an application-layer AES-256-GCM envelope with an HMAC-authenticated manifest over plain TCP. Both stream in chunks with running SHA-256 verification and fail closed — a corrupted or tampered transfer is rejected and the partial file is never written as valid.",
+      "Moves a 4GB file across an untrusted network two different ways: mutual TLS with a full CA, server, and client certificate chain, and an application-layer AES-256-GCM envelope with an HMAC-authenticated manifest over plain TCP. Both stream in chunks with running SHA-256 verification and fail closed — a corrupted or tampered transfer is rejected, and the partial file is never written as valid.",
     tech: ["Python", "TLS / mTLS", "AES-256-GCM", "HMAC", "Sockets"],
     github: "https://github.com/shirisha456/secure-4gb-transfer",
   },

@@ -10,7 +10,7 @@ export function Hero() {
       />
       <div className="relative mx-auto max-w-content px-6 pt-28 pb-24 sm:pt-36 sm:pb-32">
         <p className="font-mono text-[13px] tracking-widest text-accent uppercase">
-          Software Engineer · San Jose, CA
+          {site.role} · {site.location}
         </p>
 
         <h1 className="mt-6 text-balance font-sans text-5xl font-semibold tracking-tight text-foreground sm:text-6xl lg:text-7xl">
