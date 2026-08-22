@@ -21,11 +21,7 @@ export function Experience() {
                 </div>
 
                 <div>
-                  <p className="text-balance text-base leading-relaxed text-foreground/90 sm:text-lg">
-                    {role.summary}
-                  </p>
-
-                  <ul className="mt-5 space-y-3">
+                  <ul className="space-y-3">
                     {role.points.map((point) => (
                       <li key={point} className="flex gap-3 text-sm leading-relaxed text-muted sm:text-[15px]">
                         <span aria-hidden className="mt-2 h-1 w-1 shrink-0 rounded-full bg-accent" />
