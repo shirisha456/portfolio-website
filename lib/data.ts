@@ -141,7 +141,7 @@ export const caseStudies: CaseStudy[] = [
   {
     slug: "fitness-tracker",
     name: "Fitness Tracker",
-    tagline: "AI-powered fitness platform, built and deployed phase by phase",
+    tagline: "Full-stack fitness platform for workouts, nutrition, and progress, with an AI coach",
     problem:
       "Fitness tracking is usually split across single-purpose apps — a calorie counter, a workout log, a spreadsheet for weight over time — none of which share data. That means any \"AI coaching\" those apps offer is generic, because it isn't reasoning over a person's actual logged history across all three.",
     approach: [
@@ -224,7 +224,7 @@ export const caseStudies: CaseStudy[] = [
   {
     slug: "personal-finance-platform",
     name: "Personal Finance Platform",
-    tagline: "Event-driven personal finance platform with a transactional outbox",
+    tagline: "Full-stack finance platform for budgets, investments, and real-time spending alerts",
     problem:
       "Personal finance data is scattered across banks, brokerages, and manual tracking. Getting one accurate picture — spending by category, budget adherence, net worth, investment performance — usually means a spreadsheet, or handing a third party read access to every account.",
     approach: [
