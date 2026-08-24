@@ -24,8 +24,8 @@ export function Hero() {
         <p className="mt-6 max-w-xl text-base leading-relaxed text-muted sm:text-lg">
           Currently pursuing an MS in Software Engineering at San José State University, after
           two years building LLM-powered enterprise features and ETL infrastructure at S&amp;P
-          Global. I work end to end, but the backend — and the systems underneath it — is where
-          I spend most of my attention.
+          Global. I work across the full stack, with a particular focus on backend systems,
+          APIs, and the infrastructure behind them.
         </p>
 
         <div className="mt-10 flex flex-wrap items-center gap-4">

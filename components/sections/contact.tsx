@@ -11,11 +11,10 @@ export function Contact() {
         <Reveal className="mx-auto max-w-2xl text-center">
           <p className="font-mono text-[13px] tracking-widest text-accent uppercase">Contact</p>
           <h2 className="mt-4 text-balance font-serif text-3xl leading-tight text-foreground sm:text-4xl">
-            Looking for software engineer, backend, full-stack, and AI/LLM engineering roles.
+            Open to software engineering roles — backend, full-stack, and AI/LLM.
           </h2>
           <p className="mt-5 text-balance text-base leading-relaxed text-muted sm:text-lg">
-            I&rsquo;d love to hear about what your team is building and how my background in
-            backend systems and AI-powered products could help.
+            If that sounds like a fit, I&rsquo;d love to hear from you.
           </p>
 
           <div className="mt-10 flex flex-wrap items-center justify-center gap-3">

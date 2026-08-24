@@ -11,23 +11,20 @@ export function About() {
 
           <Reveal delay={80} className="max-w-2xl space-y-5 text-base leading-relaxed text-foreground/90 sm:text-lg">
             <p>
-              I care more about whether a system holds up under real conditions than whether it
-              demos well. A login flow that survives a replayed refresh token, an AI feature that
-              degrades to a template instead of crashing when the model call fails, a migration
-              that&rsquo;s actually been rolled back and forward again before it ships — that&rsquo;s
-              the part of engineering I find genuinely interesting.
+              I&rsquo;m a software engineer focused on backend and full-stack systems — APIs,
+              data infrastructure, and the application layers built on top of them. At S&amp;P
+              Global, I worked on AI-powered enterprise features, connecting LLMs to internal
+              GraphQL services, and separately rebuilt a slow ETL pipeline on Amazon Redshift.
+              Both are the kind of problems I like: making a system faster, more reliable, or
+              actually usable in production.
             </p>
             <p>
-              Most of what I&rsquo;ve learned has come from working at the seams between systems
-              that weren&rsquo;t designed to talk to each other — language models and enterprise
-              data services at S&amp;P Global, and on my own projects, event pipelines and
-              third-party APIs that fail in ways you only discover once something is actually
-              running. The happy path is rarely where the interesting problems are.
-            </p>
-            <p>
-              I&rsquo;m drawn to distributed systems, AI infrastructure, and the backend layers
-              other engineers build on top of — the kind of work that has to be correct before it
-              can be clever.
+              Outside of work, I build complete projects on my own time — a fitness platform and
+              a personal finance platform, each with real authentication, background processing,
+              and the infrastructure decisions behind them, not just a UI on top of a database.
+              I&rsquo;m especially interested in backend engineering, distributed systems, and
+              AI/LLM applications, and I care about getting the reliability and security right
+              along the way.
             </p>
           </Reveal>
         </div>
