@@ -139,85 +139,83 @@ export type CaseStudy = {
 
 export const caseStudies: CaseStudy[] = [
   {
-    slug: "fitness-tracker",
-    name: "Fitness Tracker",
-    tagline: "Full-stack fitness platform for workouts, nutrition, and progress, with an AI coach",
+    slug: "mcp-shared-memory-server",
+    name: "MCP Shared Memory Server",
+    tagline: "Shared memory service for AI coding tools, with conflict-safe writes and hybrid search",
     problem:
-      "Fitness tracking is usually split across single-purpose apps — a calorie counter, a workout log, a spreadsheet for weight over time — none of which share data. That means any \"AI coaching\" those apps offer is generic, because it isn't reasoning over a person's actual logged history across all three.",
+      "Developers switch between multiple AI coding tools — Claude Desktop for one task, Cursor for another — and each one starts from zero, because nothing carries context between them. A decision explained to one tool is invisible to the next, and re-explaining it every session defeats the point of an assistant having memory at all.",
     approach: [
-      "A modular, domain-driven backend architecture — auth, workouts, nutrition, progress, profile, and AI coaching — each with its own database models, validation schemas, service layer, and REST endpoints.",
-      "A single data model spanning workouts, nutrition, and body measurements, so the AI coach can reason over a user's complete logged history rather than one slice of it.",
-      "An AI coach built on the OpenAI API that generates personalized workout and meal plans and answers fitness questions, with structured response validation and graceful degradation when the API is unavailable.",
-      "Authentication built on JWT access tokens, refresh-token rotation with reuse detection, and httpOnly cookies held by a Next.js backend-for-frontend layer, keeping tokens out of browser JavaScript.",
-      "A containerized deployment on AWS EC2 behind nginx with Let's Encrypt HTTPS, plus Celery and Redis running background jobs off the request path.",
+      "A PostgreSQL-backed memory service exposed over MCP, so Claude Desktop, Cursor, and any other MCP client read and write one shared, versioned project memory instead of each maintaining its own.",
+      "Optimistic concurrency on every write: a compare-and-set update means two clients editing the same memory at once produce one winner and one explicit conflict response with the winning revision attached, never a silent overwrite.",
+      "Immutable revision history with structural supersession — retiring a memory excludes it from every retrieval path in the same transaction that creates its replacement, so an outdated decision can't resurface as a search result while remaining fully readable in the audit trail.",
+      "Hybrid retrieval combining PostgreSQL full-text search and pgvector similarity search, merged with Reciprocal Rank Fusion and served through a token-budgeted context tool so results fit a caller's context window.",
+      "Idempotent writes and content-hash deduplication kept as two distinct mechanisms: one client retrying the same request replays the original response, while two clients independently asserting the same fact are merged as corroborating evidence rather than duplicated.",
+      "369 tests against a real PostgreSQL instance, including 50 concurrent writers proving the conflict resolution for real and a hand-graded retrieval-quality benchmark gated against a committed baseline.",
     ],
     decisions: [
       {
-        title: "BFF pattern over client-held tokens",
+        title: "PostgreSQL as the only source of truth, including as a job queue",
         detail:
-          "Next.js Route Handlers proxy every backend call and hold the JWT in an httpOnly cookie. It costs an extra request hop, but it closes off the class of XSS-reads-localStorage token theft that a client-held access token is exposed to.",
+          "Embedding generation is enqueued via FOR UPDATE SKIP LOCKED in the same transaction as the write it's for, so no separate broker like Redis or Kafka is needed — the durability guarantees a job queue needs were already sitting in the database.",
       },
       {
-        title: "Session security beyond a bare JWT",
+        title: "Optimistic concurrency over pessimistic locking",
         detail:
-          "Refresh token rotation, password hashing, session revocation, and automatic silent token refresh — so a session survives normal use without ever asking a user to babysit expiring tokens.",
+          "A conflicting writer gets an immediate, informative refusal with the winning revision attached, instead of blocking behind a lock or hitting a generic serialization failure.",
       },
       {
-        title: "The AI coach is designed to fail without taking the app down",
+        title: "Structural exclusion over ranking-based suppression",
         detail:
-          "OpenAI calls return a typed 503 on a missing key or exhausted quota and a 502 on other upstream errors, with structured response validation — a third-party outage degrades one feature, not the whole product.",
+          "A retired memory is removed from the candidate set before any ranking runs, so no scoring function — today's or a future one — can accidentally resurrect it.",
       },
       {
-        title: "Real infrastructure caught what unit tests didn't",
+        title: "Reciprocal Rank Fusion over score blending",
         detail:
-          "Running the actual Docker Compose stack surfaced an nginx route-shadowing bug, a Compose port override that silently no-op'd, and a migration that raced its own auto-migrate-on-restart — none of which a unit test suite alone would have caught.",
+          "Full-text and vector search scores live on incompatible, unbounded scales; combining rank positions sidesteps needing a shared scale at all.",
+      },
+      {
+        title: "A similarity threshold chosen by measurement, not intuition",
+        detail:
+          "Without gating semantic search past a cosine-distance cutoff, hybrid retrieval looked better on paper (higher nDCG) while precision collapsed, because every unanswerable query started returning confident-looking irrelevant results.",
       },
     ],
     production: [
-      "16 phases, each independently validated end to end before the next began: 6 backend domains, then the matching frontend surface for each, then Docker/nginx, then CI, then production deploy config.",
-      "GitHub Actions CI runs lint, test, and build for both the FastAPI backend and the Next.js frontend on every change.",
-      "Live on AWS EC2 behind nginx path-based routing, with HTTPS issued via certbot's Let's Encrypt webroot method.",
-      "Background work — AI generation jobs and scheduled tasks — runs on Celery workers with Redis as the broker, kept off the request path.",
+      "369 tests across seven categories — unit, integration against real PostgreSQL, concurrency, failure injection, performance, MCP protocol, and retrieval-quality evaluation — with no mocked database anywhere in the suite.",
+      "Mutation testing on the two mechanisms correctness depends on most: the retrieval filter and the failure-classifier's branch order. Each was deliberately broken to confirm the relevant tests actually fail, then restored.",
+      "Retrieval quality measured against a hand-graded set of 200 memories and 34 queries, with results gated against a committed baseline so a regression fails the build instead of going unnoticed.",
+      "Known gaps stated directly rather than glossed over: no authentication layer (fine for local single-user use, a real gap for a shared multi-tenant server), no metrics exporter, and manual retention that has to be invoked rather than scheduled.",
     ],
     stack: [
-      "FastAPI",
-      "SQLAlchemy 2.0 (async)",
-      "Alembic",
-      "Celery",
-      "Redis",
+      "Python 3.12",
+      "MCP SDK",
       "PostgreSQL 16",
-      "Next.js (App Router)",
-      "TypeScript",
-      "Tailwind CSS",
+      "pgvector (HNSW)",
+      "SQLAlchemy 2.0 (async)",
+      "asyncpg",
+      "Alembic",
+      "fastembed",
       "Docker Compose",
-      "nginx",
-      "AWS EC2",
-      "GitHub Actions",
-      "OpenAI API",
+      "pytest",
     ],
-    github: "https://github.com/shirisha456/Fitness_Tracker",
-    live: "https://fitness-tracker.18-221-88-168.sslip.io",
-    status: "Live · 16/16 phases complete",
+    github: "https://github.com/shirisha456/mcp_shared_memory_server",
+    status: "369 tests, all passing",
     diagram: {
       nodes: [
-        { id: "browser", label: "Browser", x: 20, y: 150, w: 120, h: 48, variant: "external" },
-        { id: "nginx", label: "nginx", sublabel: ":80 / :443", x: 200, y: 150, w: 130, h: 48, variant: "group" },
-        { id: "frontend", label: "Next.js BFF", sublabel: "Route Handlers · httpOnly cookies", x: 400, y: 60, w: 190, h: 60, variant: "primary" },
-        { id: "backend", label: "FastAPI backend", sublabel: "REST API", x: 400, y: 220, w: 190, h: 60, variant: "primary" },
-        { id: "postgres", label: "PostgreSQL", sublabel: "asyncpg", x: 660, y: 150, w: 150, h: 50, variant: "store" },
-        { id: "redis", label: "Redis", sublabel: "Celery broker", x: 660, y: 230, w: 150, h: 50, variant: "store" },
-        { id: "worker", label: "Celery worker + beat", x: 400, y: 320, w: 190, h: 50, variant: "group" },
-        { id: "openai", label: "OpenAI", sublabel: "AI coach only", x: 660, y: 320, w: 150, h: 50, variant: "external" },
+        { id: "clients", label: "MCP Clients", sublabel: "Claude Desktop · Cursor", x: 20, y: 140, w: 180, h: 55, variant: "external" },
+        { id: "server", label: "memhub-server", sublabel: "7 MCP tools", x: 260, y: 140, w: 180, h: 55, variant: "primary" },
+        { id: "service", label: "Service layer", sublabel: "CAS · idempotency · dedup", x: 500, y: 60, w: 210, h: 55, variant: "group" },
+        { id: "postgres", label: "PostgreSQL 16", sublabel: "memories · revisions · outbox", x: 500, y: 220, w: 210, h: 55, variant: "store" },
+        { id: "hybrid", label: "Full-text + pgvector", sublabel: "Reciprocal Rank Fusion", x: 770, y: 60, w: 200, h: 55, variant: "group" },
+        { id: "filter", label: "Stage-0 filter", sublabel: "excludes superseded/deleted", x: 770, y: 220, w: 200, h: 55, variant: "group" },
       ],
       edges: [
-        { from: "browser", to: "nginx" },
-        { from: "nginx", to: "frontend", label: "/* " },
-        { from: "nginx", to: "backend", label: "/api/v1/*" },
-        { from: "frontend", to: "backend", label: "internal, never via nginx", dashed: true },
-        { from: "backend", to: "postgres" },
-        { from: "backend", to: "redis" },
-        { from: "worker", to: "redis" },
-        { from: "backend", to: "openai", dashed: true },
+        { from: "clients", to: "server", label: "stdio / JSON-RPC" },
+        { from: "server", to: "service" },
+        { from: "service", to: "postgres", label: "same transaction" },
+        { from: "service", to: "hybrid" },
+        { from: "postgres", to: "hybrid" },
+        { from: "hybrid", to: "filter" },
+        { from: "filter", to: "service", label: "token-budgeted context", dashed: true },
       ],
     },
   },
@@ -228,12 +226,12 @@ export const caseStudies: CaseStudy[] = [
     problem:
       "Personal finance data is scattered across banks, brokerages, and manual tracking. Getting one accurate picture — spending by category, budget adherence, net worth, investment performance — usually means a spreadsheet, or handing a third party read access to every account.",
     approach: [
-      "Accounts, transactions, budgets, savings goals, investments, net worth, and cash-flow forecasting, all scoped to the authenticated user.",
-      "Plaid integration for bank account linking and transaction sync, with access tokens encrypted at rest and per-user authorization enforced across financial data.",
+      "A modular backend architecture covering accounts, transactions, budgets, savings goals, investments, net worth, and cash-flow forecasting, all scoped to the authenticated user.",
+      "Plaid integration for bank account linking and transaction sync, with encrypted access tokens, cursor-based pagination, and database-level deduplication so a re-synced account never creates duplicate transactions.",
       "A transactional outbox that writes each event in the same database transaction as the record that triggered it, so no event is lost if the message broker is unavailable.",
       "Three independently deployable consumer services on Kafka that categorize transactions, detect unusual spending with idempotent alert creation, and push real-time alerts to the browser over WebSockets.",
       "AI-generated monthly spending insights grounded on pre-computed aggregates, with a deterministic template fallback when the model call fails.",
-      "Distributed tracing, metrics, and structured logs across every service, correlated end to end through OpenTelemetry, Prometheus, Grafana, Loki, and Tempo.",
+      "Distributed tracing, metrics, and structured logs correlated end to end through OpenTelemetry, Prometheus, Grafana, and Tempo, with failure testing that validates recovery from crashes, outages, and broker failures.",
     ],
     decisions: [
       {
@@ -263,7 +261,7 @@ export const caseStudies: CaseStudy[] = [
       },
     ],
     production: [
-      "Rebuilt from an earlier version across 16 reviewed phases, each with its own design doc and, for cross-cutting decisions, an ADR under docs/adr/.",
+      "Built across 16 reviewed phases, each with its own design doc and, for cross-cutting decisions, an ADR under docs/adr/.",
       "Observability stack wired end to end: OpenTelemetry traces into Tempo, Prometheus metrics, structured JSON logs into Loki, with a working Grafana trace-to-logs correlation via a hand-carried trace_id.",
       "Infrastructure as code for two environments (a Terraform + Helm/EKS design, and a single-EC2 path sized from real docker stats measurements) — written and validated in CI, deliberately never applied against real AWS, and documented as exactly that: a scope boundary, not an oversight.",
       "CI runs backend, frontend, and three independent consumer services as separate jobs, plus a chaos-smoke-test job on main that actually kills and restarts containers against a full Compose stack.",
@@ -317,7 +315,25 @@ export const caseStudies: CaseStudy[] = [
   },
 ];
 
-export const otherWork = [
+export type OtherProject = {
+  name: string;
+  tagline: string;
+  description: string;
+  tech: string[];
+  github: string;
+  live?: string;
+};
+
+export const otherWork: OtherProject[] = [
+  {
+    name: "Fitness Tracker",
+    tagline: "Full-stack fitness platform for workouts, nutrition, and progress, with an AI coach",
+    description:
+      "A modular, domain-driven FastAPI backend — auth, workouts, nutrition, progress, profile, and AI coaching — behind a Next.js frontend acting as its own backend-for-frontend, with JWT authentication, refresh-token rotation with reuse detection, and httpOnly cookies. An OpenAI-backed AI coach generates personalized workout and meal plans with graceful degradation when the API is unavailable. Deployed on AWS EC2 behind nginx with Let's Encrypt HTTPS.",
+    tech: ["FastAPI", "Next.js", "PostgreSQL", "Celery", "Redis", "Docker", "AWS EC2"],
+    github: "https://github.com/shirisha456/Fitness_Tracker",
+    live: "https://fitness-tracker.18-221-88-168.sslip.io",
+  },
   {
     name: "Secure File Transfer",
     tagline: "Two secure transfer protocols, built and compared from scratch",

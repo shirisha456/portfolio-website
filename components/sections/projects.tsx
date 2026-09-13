@@ -1,4 +1,5 @@
-import { ArrowUpRight } from "lucide-react";
+import { ExternalLink } from "lucide-react";
+import { GitHubIcon } from "@/components/icons";
 import { CaseStudyBlock } from "@/components/case-study";
 import { Reveal } from "@/components/reveal";
 import { caseStudies, otherWork } from "@/lib/data";
@@ -24,15 +25,31 @@ export function Projects() {
           <div className="mt-6 grid gap-6 sm:grid-cols-2">
             {otherWork.map((project, i) => (
               <Reveal key={project.name} delay={i * 80}>
-                <a
-                  href={project.github}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="group flex h-full flex-col rounded-xl border border-border p-6 transition-colors hover:border-border-strong"
-                >
+                <div className="flex h-full flex-col rounded-xl border border-border p-6 transition-colors hover:border-border-strong">
                   <div className="flex items-start justify-between gap-4">
                     <h4 className="font-serif text-lg text-foreground">{project.name}</h4>
-                    <ArrowUpRight className="size-4 shrink-0 text-muted transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent" />
+                    <div className="flex shrink-0 items-center gap-3">
+                      {project.live && (
+                        <a
+                          href={project.live}
+                          target="_blank"
+                          rel="noreferrer"
+                          aria-label={`${project.name} live demo`}
+                          className="text-muted transition-colors hover:text-accent"
+                        >
+                          <ExternalLink className="size-4" />
+                        </a>
+                      )}
+                      <a
+                        href={project.github}
+                        target="_blank"
+                        rel="noreferrer"
+                        aria-label={`${project.name} on GitHub`}
+                        className="text-muted transition-colors hover:text-foreground"
+                      >
+                        <GitHubIcon className="size-4" />
+                      </a>
+                    </div>
                   </div>
                   <p className="mt-1 text-sm text-accent">{project.tagline}</p>
                   <p className="mt-3 text-sm leading-relaxed text-muted">{project.description}</p>
@@ -43,7 +60,7 @@ export function Projects() {
                       </span>
                     ))}
                   </div>
-                </a>
+                </div>
               </Reveal>
             ))}
           </div>
